@@ -1,5 +1,10 @@
 <template>
-  <project-management />
+  <div>
+    <md-toolbar class="md-primary">
+      <h3 class="md-title">Project Management</h3>
+    </md-toolbar>
+    <project-management />
+  </div>
 </template>
 
 <script>

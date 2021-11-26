@@ -1,4 +1,4 @@
-const { addProject, getAllProjects, getProjectIndex, getProject } = require('../util')
+const { addProject, getAllProjects, getProjectIndex, getProject, updateProject } = require('../util')
 
 const { validationResult } = require('express-validator')
 
@@ -18,7 +18,11 @@ module.exports = {
   },
 
   update (req, res) {
-    // TODO: tbd
+    if (updateProject(req.params.id, req.body)) {
+      res.send({ message: 'project is updated successfully' })
+    } else {
+      res.status(404).send({ message: 'project not found' })
+    }
   },
 
   getAll (req, res) {

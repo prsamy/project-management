@@ -224,8 +224,9 @@ describe('Projects', () => {
         .request(app)
         .get('/api/project')
         .end((_err, res) => {
+          console.log(res.body.projects[1].employees)
           res.should.have.status(200)
-          res.body.should.have.nested.property('projects[1].employees[0].name').eql('prakash')
+          res.body.should.have.nested.property('projects[1].employees[0]').eql('12345a')
           done()
         })
     })

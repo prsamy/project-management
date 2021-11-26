@@ -1,6 +1,10 @@
 <template>
   <div id='employee'>
-    <add-employee-dialog v-model="showDialogue"></add-employee-dialog>
+    <add-employee-dialogue v-model="showDialogue"></add-employee-dialogue>
+
+    <md-toolbar class="md-accent" :md-elevation="1">
+      <span class="md-title">Employees</span>
+    </md-toolbar>
 
     <md-list v-for="emp in employees" :key="emp.id" class="md-triple-line">
       <employee-item :employee="emp" />
@@ -17,10 +21,10 @@
 <script>
 import EmployeeItem from './EmployeeItem.vue'
 import {employeeService} from '../../service/employee'
-import AddEmployeeDialog from './AddEmployeeDialog.vue'
+import AddEmployeeDialogue from './AddEmployeeDialogue.vue'
 
 export default {
-  components: { EmployeeItem, AddEmployeeDialog },
+  components: { EmployeeItem, AddEmployeeDialogue },
   data () {
     return {
       showDialogue: false,

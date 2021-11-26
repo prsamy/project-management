@@ -37,45 +37,46 @@ const getFileContent = () => {
 
 const getEmployeeIndex = (id) => {
   const data = getFileContent()
-  return data.employees.length > 0 ? data.employees.findIndex(e => e.id === id) : -1
+  return data.employees.length > 0 ? data.employees.findIndex(e => parseInt(e.id) === parseInt(id)) : -1
 }
 
 const getProjectIndex = (id) => {
   const data = getFileContent()
-  return data.projects.length > 0 ? data.projects.findIndex(e => e.id === parseInt(id)) : -1
+  return data.projects.length > 0 ? data.projects.findIndex(e => parseInt(e.id) === parseInt(id)) : -1
 }
 
-const convertEmployeeIDToObjectInProject = (proj) => {
-  const allEmp = []
-  for (const empId of proj.employees) {
-    allEmp.push(getFileContent().employees[getEmployeeIndex(empId)])
-  }
-  proj.employees = allEmp
-  return proj
-}
+// const convertEmployeeIDToObjectInProject = (proj) => {
+//   const allEmp = []
+//   for (const empId of proj.employees) {
+//     allEmp.push(getFileContent().employees[getEmployeeIndex(empId)])
+//   }
+//   proj.employees = allEmp
+//   return proj
+// }
 
 const getAllEmployees = () => {
   return getFileContent().employees
 }
 
 const getAllProjects = () => {
-  const allProj = []
-  for (let proj of getFileContent().projects) {
-    if (proj.employees.length > 0) {
-      proj = convertEmployeeIDToObjectInProject(proj)
-    }
-    allProj.push(proj)
-  }
-  return allProj
+  // const allProj = []
+  // for (let proj of getFileContent().projects) {
+  //   if (proj.employees.length > 0) {
+  //     proj = convertEmployeeIDToObjectInProject(proj)
+  //   }
+  //   allProj.push(proj)
+  // }
+  // return allProj
+  return getFileContent().projects
 }
 
 const getProject = (id) => {
   const idx = getProjectIndex(id)
   if (idx >= 0) {
-    let proj = getFileContent().projects[idx]
-    if (proj.employees.length > 0) {
-      proj = convertEmployeeIDToObjectInProject(proj)
-    }
+    const proj = getFileContent().projects[idx]
+    // if (proj.employees.length > 0) {
+    //   proj = convertEmployeeIDToObjectInProject(proj)
+    // }
     return proj
   }
 }
@@ -92,6 +93,20 @@ const addProject = (body) => {
   fs.writeFileSync(empFilePath, JSON.stringify(data))
 }
 
+const updateProject = (id, body) => {
+  console.log('PRAKASH: ', id, body)
+  let updated = false
+  const fileContent = getFileContent()
+  const idx = getProjectIndex(parseInt(id))
+  if (idx >= 0) {
+    fileContent.projects[idx] = { ...body, id: parseInt(id) }
+    fs.writeFile(empFilePath, '', function () { })
+    fs.writeFileSync(empFilePath, JSON.stringify(fileContent))
+    updated = true
+  }
+  return updated
+}
+
 module.exports = {
   initFile,
   deleteFile,
@@ -102,5 +117,6 @@ module.exports = {
   addProject,
   getProjectIndex,
   getAllProjects,
-  getProject
+  getProject,
+  updateProject
 }

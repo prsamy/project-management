@@ -7,9 +7,13 @@
                   <div class="md-title">{{project.name}}</div>
                   <div class="md-subhead">{{project.description}}</div>
                   <div class="md-subhead">{{project.date}}</div>
-                  <div v-for="employee in project.employees" :key="employee.id" class="md-subhead">{{employee.name}}</div>
+                  <!-- convert empid to emp name -->
+                  <div v-for="employeeId in project.employees" :key="employeeId" class="md-subhead">{{employeeId}}</div>
                 </md-card-header-text>
               </md-card-header>
+              <md-card-actions>
+                <md-button @click="$emit('edit', project)">Edit</md-button>
+              </md-card-actions>
             </md-card>
         </md-list-item>
   </div>
@@ -19,8 +23,7 @@
 
 export default {
   props: ['project'],
-  created () {
-  }
+  emits: ['edit']
 }
 </script>
 

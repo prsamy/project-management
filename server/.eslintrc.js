@@ -11,7 +11,7 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: 'module'
     // parser: 'vue-eslint-parser',
     // parser: 'babel-eslint'
   },

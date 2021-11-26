@@ -85,7 +85,6 @@ export default {
 }
 
 function validateAlphanumeric (text) {
-  console.log('alpha number: ', new RegExp('^[a-z0-9]+$', 'i').test(text))
   return new RegExp('^[a-z0-9]+$', 'i').test(text)
 }
 

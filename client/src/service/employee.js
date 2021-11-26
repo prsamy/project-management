@@ -10,6 +10,15 @@ export const employeeService = {
     }
   },
 
+  get: async (id) => {
+    try {
+      const res = await Api.get(`/employee/${id}`)
+      return { status: res.status, data: res.data }
+    } catch (error) {
+      return { status: error.response.status, data: error.response.data }
+    }
+  },
+
   addEmployee: async (employee) => {
     try {
       const res = await Api.post('/employee', employee)
