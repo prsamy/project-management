@@ -71,7 +71,7 @@ describe('Employees', () => {
         .get('/api/employee')
         .end((_err, res) => {
           res.should.have.status(200)
-          res.body.should.be.a('array')
+          res.body.should.have.nested.property('employees[0].name').eql('prakash')
           done()
         })
     })

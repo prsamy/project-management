@@ -1,4 +1,4 @@
-const { getFileContent, addEmployee, getEmployeeIndex } = require('../util')
+const { getFileContent, addEmployee, getEmployeeIndex, getAllEmployees } = require('../util')
 
 const { validationResult } = require('express-validator')
 
@@ -18,7 +18,12 @@ module.exports = {
   },
 
   getAll (req, res) {
-    res.send(getFileContent().employees)
+    const employees = getAllEmployees()
+    if (employees.length > 0) {
+      res.status(200).json({ employees })
+    } else {
+      res.status(404).send({ message: 'employees not found' })
+    }
   },
 
   get (req, res) {

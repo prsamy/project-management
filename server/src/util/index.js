@@ -27,9 +27,9 @@ const deleteFile = () => {
   }
 }
 
-// const autoGenId = () => {
-//   return Math.floor(100 + Math.random() * 900)
-// }
+const autoGenId = () => {
+  return Math.floor(100 + Math.random() * 900)
+}
 
 const getFileContent = () => {
   return JSON.parse(fs.readFileSync(empFilePath))
@@ -42,19 +42,27 @@ const getEmployeeIndex = (id) => {
 
 const getProjectIndex = (id) => {
   const data = getFileContent()
-  //   console.log('projects: ', data)
   return data.projects.length > 0 ? data.projects.findIndex(e => e.id === parseInt(id)) : -1
+}
+
+const convertEmployeeIDToObjectInProject = (proj) => {
+  const allEmp = []
+  for (const empId of proj.employees) {
+    allEmp.push(getFileContent().employees[getEmployeeIndex(empId)])
+  }
+  proj.employees = allEmp
+  return proj
+}
+
+const getAllEmployees = () => {
+  return getFileContent().employees
 }
 
 const getAllProjects = () => {
   const allProj = []
-  for (const proj of getFileContent().projects) {
+  for (let proj of getFileContent().projects) {
     if (proj.employees.length > 0) {
-      const allEmp = []
-      for (const empId of proj.employees) {
-        allEmp.push(getFileContent().employees[getEmployeeIndex(empId)])
-      }
-      proj.employees = allEmp
+      proj = convertEmployeeIDToObjectInProject(proj)
     }
     allProj.push(proj)
   }
@@ -64,13 +72,9 @@ const getAllProjects = () => {
 const getProject = (id) => {
   const idx = getProjectIndex(id)
   if (idx >= 0) {
-    const proj = getFileContent().projects[idx]
+    let proj = getFileContent().projects[idx]
     if (proj.employees.length > 0) {
-      const allEmp = []
-      for (const empId of proj.employees) {
-        allEmp.push(getFileContent().employees[getEmployeeIndex(empId)])
-      }
-      proj.employees = allEmp
+      proj = convertEmployeeIDToObjectInProject(proj)
     }
     return proj
   }
@@ -84,7 +88,7 @@ const addEmployee = (body) => {
 
 const addProject = (body) => {
   const data = getFileContent()
-  data.projects.push({ id: 123, ...body })
+  data.projects.push({ id: autoGenId(), ...body })
   fs.writeFileSync(empFilePath, JSON.stringify(data))
 }
 
@@ -94,6 +98,7 @@ module.exports = {
   getFileContent,
   addEmployee,
   getEmployeeIndex,
+  getAllEmployees,
   addProject,
   getProjectIndex,
   getAllProjects,
