@@ -42,6 +42,7 @@
 import { projectService } from '../../service/project'
 import AssignProjectEmployee from './AssignProjectEmployee.vue'
 export default {
+  name: 'AddProjectDialogue',
   components: { AssignProjectEmployee },
   props: ['value', 'editableProject'],
   data () {

@@ -73,7 +73,6 @@ const addProject = (body) => {
 }
 
 const updateProject = (id, body) => {
-  console.log('PRAKASH: ', id, body)
   let updated = false
   const fileContent = getFileContent()
   const idx = getProjectIndex(parseInt(id))

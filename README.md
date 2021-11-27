@@ -46,5 +46,4 @@ Instructions
 
 Notes
 =====
-- Most of the part in server side is completed with unit testing, need to complete update project part yet
-- Only basic setup is completed in client side
+- Added some unit tests for client code with Vue test util + Mocha + Chai. Will add some more soon.

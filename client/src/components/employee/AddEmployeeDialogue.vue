@@ -74,7 +74,6 @@ export default {
   methods: {
     async addEmployee () {
       const result = await employeeService.addEmployee({id: this.id, name: this.name})
-      console.log(result)
       if (result.status === 200) {
         this.$emit('input', false)
         this.showSnackbar = true

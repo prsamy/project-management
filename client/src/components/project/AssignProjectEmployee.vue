@@ -14,6 +14,7 @@
 <script>
 import { employeeService } from '../../service/employee'
 export default {
+  name: 'AssignProjectEmployee',
   props: ['value'],
   emits: ['input'],
   data () {

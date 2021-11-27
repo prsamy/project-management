@@ -10,9 +10,14 @@
 </template>
 
 <script>
-
 export default {
-  props: ['employee']
+  name: 'EmployeeItem',
+  props: ['employee'],
+  data () {
+    return {
+
+    }
+  }
 }
 </script>
 

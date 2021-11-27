@@ -13,9 +13,7 @@ export default {
     }
   },
   async created () {
-    console.log('In child: ', this.id)
     const result = await employeeService.get(this.id)
-    console.log('Child values: ', result.data)
     if (result.status === 200 && result.data) {
       this.employees = result.data.name
     }

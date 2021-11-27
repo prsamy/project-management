@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {projectService} from '../../service/project'
+import { projectService } from '../../service/project'
 import AddProjectDialogue from './AddProjectDialogue.vue'
 import ProjectItem from './ProjectItem.vue'
 
@@ -42,7 +42,6 @@ export default {
     const result = await projectService.getAll()
     if (result.status === 200) {
       this.projects = [...this.projects, ...result.data.projects]
-      console.log(this.projects)
     }
   }
 }

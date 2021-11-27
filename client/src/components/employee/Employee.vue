@@ -24,6 +24,7 @@ import {employeeService} from '../../service/employee'
 import AddEmployeeDialogue from './AddEmployeeDialogue.vue'
 
 export default {
+  name: 'Employee',
   components: { EmployeeItem, AddEmployeeDialogue },
   data () {
     return {
