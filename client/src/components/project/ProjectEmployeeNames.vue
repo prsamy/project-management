@@ -1,5 +1,5 @@
 <template>
-  <h4>{{employees}}</h4>
+  <h4>{{employee}}</h4>
 </template>
 
 <script>
@@ -9,13 +9,14 @@ export default {
   props: ['id'],
   data () {
     return {
-      employees: []
+      employee: ''
     }
   },
   async created () {
     const result = await employeeService.get(this.id)
+    console.log('Employee: ', result.data)
     if (result.status === 200 && result.data) {
-      this.employees = result.data.name
+      this.employee = result.data.name
     }
   }
 

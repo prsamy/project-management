@@ -15,6 +15,10 @@
       <md-icon>add</md-icon>
     </md-button>
 
+    <md-snackbar md-position="left" :md-duration="5000" :md-active.sync="showSnackbar" md-persistent>
+      <span>{{snackbarMessage}}</span>
+    </md-snackbar>
+
   </div>
 </template>
 
@@ -29,6 +33,8 @@ export default {
   data () {
     return {
       showDialogue: false,
+      showSnackbar: false,
+      snackbarMessage: '',
       employees: []
     }
   },
@@ -36,6 +42,9 @@ export default {
     const result = await employeeService.getAll()
     if (result.status === 200) {
       this.employees = [...this.employees, ...result.data.employees]
+    } else {
+      this.snackbarMessage = result.data.message
+      this.showSnackbar = true
     }
   }
 }

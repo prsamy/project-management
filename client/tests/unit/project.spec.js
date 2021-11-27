@@ -2,7 +2,7 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
 import Project from '../../src/components/project/Project.vue'
-import AddProjectDialogue from '../../src/components/project/AddProjectDialogue.vue'
+import ProjectForm from '../../src/components/project/ProjectForm.vue'
 
 describe('Project.vue', () => {
   let wrapper
@@ -17,7 +17,7 @@ describe('Project.vue', () => {
     expect(wrapper.vm.editableProject).to.be.an('undefined')
   })
   it('check existence of add project form modal', () => {
-    expect(wrapper.findComponent(AddProjectDialogue).exists()).to.be.true
+    expect(wrapper.findComponent(ProjectForm).exists()).to.be.true
   })
 
   after(() => {

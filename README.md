@@ -10,9 +10,15 @@ Steps for project setup
     c. rum 'npm start' to start the server, which is listening in port 8081 - localhost:8081
 3. Go to client directory
     a. run 'npm install'
+    b. run 'npm run test:unit' to run unit testing for Vue components
     b. ensure server is already running
     c. run 'npm run dev'
     d. Open client url mentioned below in chrome or firefox browser
+
+URL
+===
+Server: http://localhost:8081
+Client: http://localhost:8080
 
 On the browser
 ==============
@@ -27,14 +33,7 @@ On the browser
     a. Prefilled form will be opened
     b. you can change value
     c. You will see "Successfully added/edited" message in the bottom left side of the screen
-6. After form data is added/edited, please refresh the form to load the latest data from the server. --> TODO: fix to added value in the page
-
-
-URL
-===
-Server: http://localhost:8081
-Client: http://localhost:8080
-
+6. After form data is added/edited, please refresh the form to load the latest data from the server. --> TODO: fix to added value in the pag
 
 Instructions
 ============
@@ -46,4 +45,4 @@ Instructions
 
 Notes
 =====
-- Added some unit tests for client code with Vue test util + Mocha + Chai. Will add some more soon.
+Keep improving unit test cases and some user experiances
