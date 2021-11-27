@@ -21,7 +21,6 @@ const initFile = () => {
 const deleteFile = () => {
   try {
     fs.unlinkSync(empFilePath)
-    console.log('successfully deleted /tmp/hello')
   } catch (error) {
     console.log(error)
   }
@@ -45,28 +44,11 @@ const getProjectIndex = (id) => {
   return data.projects.length > 0 ? data.projects.findIndex(e => parseInt(e.id) === parseInt(id)) : -1
 }
 
-// const convertEmployeeIDToObjectInProject = (proj) => {
-//   const allEmp = []
-//   for (const empId of proj.employees) {
-//     allEmp.push(getFileContent().employees[getEmployeeIndex(empId)])
-//   }
-//   proj.employees = allEmp
-//   return proj
-// }
-
 const getAllEmployees = () => {
   return getFileContent().employees
 }
 
 const getAllProjects = () => {
-  // const allProj = []
-  // for (let proj of getFileContent().projects) {
-  //   if (proj.employees.length > 0) {
-  //     proj = convertEmployeeIDToObjectInProject(proj)
-  //   }
-  //   allProj.push(proj)
-  // }
-  // return allProj
   return getFileContent().projects
 }
 
@@ -74,9 +56,6 @@ const getProject = (id) => {
   const idx = getProjectIndex(id)
   if (idx >= 0) {
     const proj = getFileContent().projects[idx]
-    // if (proj.employees.length > 0) {
-    //   proj = convertEmployeeIDToObjectInProject(proj)
-    // }
     return proj
   }
 }

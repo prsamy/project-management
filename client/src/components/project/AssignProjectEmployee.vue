@@ -28,6 +28,7 @@ export default {
     }
   },
   async created () {
+    this.assignedEmployees = this.value
     const result = await employeeService.getAll()
     if (result.status === 200) {
       this.employees = [...this.employees, ...result.data.employees]

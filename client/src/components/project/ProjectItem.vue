@@ -22,20 +22,18 @@
 </template>
 
 <script>
-import ProjectEmployeeNames from './ProjectEmployeeNames.vue'
 
 export default {
-  components: { ProjectEmployeeNames },
   props: ['project'],
   emits: ['edit'],
   data () {
     return {
       employees: []
     }
+  },
+  components: {
+    ProjectEmployeeNames: () => import('./ProjectEmployeeNames.vue')
   }
-  // components: {
-  //   ProjectEmployeeNames: import('./ProjectEmployeeNames.vue')
-  // }
 }
 </script>
 
