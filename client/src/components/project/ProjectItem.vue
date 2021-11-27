@@ -4,11 +4,13 @@
             <md-card class="md-primary" md-theme="black-card">
               <md-card-header>
                 <md-card-header-text>
-                  <div class="md-title">{{project.name}}</div>
+                  <h4 class="project--title md-title">{{project.name}}</h4>
+                  <span class="project--start_date md-subhead"><i>Start date:</i> {{project.date}}</span>
                   <div class="md-subhead">{{project.description}}</div>
-                  <div class="md-subhead">{{project.date}}</div>
-                  <!-- convert empid to emp name -->
-                  <div v-for="employeeId in project.employees" :key="employeeId" class="md-subhead">{{employeeId}}</div>
+                  <h4 class="project__assigned-label--header">Assigned: </h4>
+                  <div v-for="employeeId in project.employees" :key="employeeId" class="project--employee-names-parent md-subhead">
+                    <project-employee-names :id="employeeId" />
+                  </div>
                 </md-card-header-text>
               </md-card-header>
               <md-card-actions>
@@ -20,15 +22,35 @@
 </template>
 
 <script>
+import ProjectEmployeeNames from './ProjectEmployeeNames.vue'
 
 export default {
+  components: { ProjectEmployeeNames },
   props: ['project'],
-  emits: ['edit']
+  emits: ['edit'],
+  data () {
+    return {
+      employees: []
+    }
+  }
+  // components: {
+  //   ProjectEmployeeNames: import('./ProjectEmployeeNames.vue')
+  // }
 }
 </script>
 
 <style scoped>
   .md-card {
     width: 100%;
+  }
+  .project--title {
+    display: inline-block;
+  }
+  .project--start_date {
+    position: absolute;
+    right: 10%;
+  }
+  .project--employee-names-parent, .project__assigned-label--header {
+    display: inline-block;
   }
 </style>

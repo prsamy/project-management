@@ -1,15 +1,11 @@
 <template>
   <div>
-      <md-list-item>
-        <md-avatar>
-          <img src="" alt="People">
-        </md-avatar>
-
-        <div class="md-list-item-text">
-          <span>{{employee.name}}</span>
-          <p>{{employee.id}}</p>
-        </div>
-      </md-list-item>
+    <md-list-item>
+      <div class="md-list-item-text">
+        <div class="md-title">{{employee.name}}</div>
+        <div>{{employee.id}}</div>
+      </div>
+    </md-list-item>
   </div>
 </template>
 
