@@ -1,49 +1,75 @@
 <template>
-  <div>
-      <div class="overlay" v-if="value"></div>
-
-      <div class="modal" v-if="value">
+  <div v-if="value">
+      <div class="overlay"></div>
+      <div class="modal">
         <h3>{{formTitle}}</h3>
 
-        <form @submit.prevent="addProject">
+        <form @submit.prevent="submitProject">
           <md-field :class="nameMessageClass">
             <label for="project_name">Project name</label>
-            <md-input id="project_name" required v-model="name" maxlength="80"></md-input>
+            <md-input
+              required
+              id="project_name"
+              maxlength="80"
+              v-model="name"></md-input>
             <span class="md-error">{{this.nameErrorMessage}}</span>
           </md-field>
 
           <md-field :class="descriptionMessageClass">
             <label for="project_description">Description</label>
-            <md-textarea id="project_description" required v-model="description" maxlength="300"></md-textarea>
+            <md-textarea
+              required
+              id="project_description"
+              maxlength="300"
+              v-model="description"></md-textarea>
             <span class="md-error">{{this.decriptionErrorMessage}}</span>
           </md-field>
 
           <md-field :class="dateMessageClass">
             <md-icon>event</md-icon>
             <label for="project_start_date">Start date</label>
-            <md-input id="project_start_date" required v-model="date" placeholder="yyyy-mm-dd"></md-input>
+            <md-input
+              required
+              id="project_start_date"
+              placeholder="yyyy-mm-dd"
+              v-model="date" />
             <span class="md-error">{{this.dateErrorMessage}}</span>
           </md-field>
 
-          <assign-project-employee v-model="employees"/>
+          <ProjectAssignEmployee v-model="employees" />
 
-          <md-button class="md-raised" type="cancel" @click="$emit('input', false)">CANCEL</md-button>
-          <md-button class="md-raised md-primary" :disabled="!validateForm" type="submit">SUBMIT</md-button>
+          <md-button
+            class="md-raised"
+            type="cancel"
+            @click.prevent="$emit('input', false)">
+            CANCEL
+          </md-button>
+          <md-button
+            class="md-raised md-primary"
+            type="submit"
+            :disabled="!validateForm">
+            SUBMIT
+          </md-button>
         </form>
       </div>
 
-      <md-snackbar md-position="left" :md-duration="snackbarDuration" :md-active.sync="showSnackbar" md-persistent>
+      <!-- <md-snackbar
+        md-position="left"
+        :md-active.sync="showSnackbar"
+        :md-duration="snackbarDuration"
+        md-persistent>
         <span>{{snackbarMessage}}</span>
-      </md-snackbar>
+      </md-snackbar> -->
   </div>
 </template>
 
 <script>
-import { projectService } from '../../service/project'
-import AssignProjectEmployee from './AssignProjectEmployee.vue'
+import validation from '../../service/form-validation'
+import ProjectAssignEmployee from './ProjectAssignEmployee.vue'
+
 export default {
   name: 'ProjectForm',
-  components: { AssignProjectEmployee },
+  components: { ProjectAssignEmployee },
   props: ['value', 'editableProject'],
   data () {
     return {
@@ -52,8 +78,8 @@ export default {
       date: '',
       employees: [],
       showSnackbar: false,
-      snackbarDuration: 5000,
-      snackbarMessage: '',
+      // snackbarDuration: 5000,
+      // snackbarMessage: '',
       nameErrorMessage: '',
       decriptionErrorMessage: '',
       dateErrorMessage: '',
@@ -63,7 +89,7 @@ export default {
   computed: {
     nameMessageClass () {
       return {
-        'md-invalid': this.name.length < 10 || !validateAlphanumeric(this.name)
+        'md-invalid': this.name.length < 10 || !validation.validateAlphanumeric(this.name)
       }
     },
     descriptionMessageClass () {
@@ -73,31 +99,31 @@ export default {
     },
     dateMessageClass () {
       return {
-        'md-invalid': !validateDate(this.date)
+        'md-invalid': !validation.validateDate(this.date)
       }
     },
     validateForm () {
-      return this.name.length >= 10 && validateAlphanumeric(this.name)
+      return this.name.length >= 10 && validation.validateAlphanumeric(this.name)
     }
   },
   watch: {
     name () {
-      if (this.name.length < 10 || !validateAlphanumeric(this.name)) {
-        this.nameErrorMessage = 'The name should be in 10 to 80 letter alphanumeric'
+      if ((this.name && this.name.length < 10) || !validation.validateAlphanumeric(this.name)) {
+        this.nameErrorMessage = 'The name should be in 10 to 80 letters alphanumeric'
       }
     },
     description () {
-      if (this.description.length < 50) {
-        this.decriptionErrorMessage = 'The description should be in 50 to 300 letter alphabet'
+      if (this.description && this.description.length < 50) {
+        this.decriptionErrorMessage = 'The description should be in 50 to 300 letters alphabet'
       }
     },
     date () {
-      if (!validateDate(this.date)) {
+      if (!validation.validateDate(this.date)) {
         this.dateErrorMessage = 'The date should be in yyyy-mm-dd format'
       }
     },
     editableProject () {
-      if (this.editableProject !== undefined && this.editableProject) {
+      if (this.editableProject) {
         this.name = this.editableProject.name
         this.description = this.editableProject.description
         this.date = this.editableProject.date
@@ -107,29 +133,16 @@ export default {
     }
   },
   methods: {
-    async addProject (values) {
-      const obj = {name: this.name, description: this.description, date: this.date, employees: this.employees}
-      const result = (this.editableProject !== undefined && this.editableProject) ? await projectService.update(this.editableProject.id, obj) : await projectService.add(obj)
-      if (result.status === 200) {
-        this.$emit('input', false)
-        this.showSnackbar = true
-        this.snackbarMessage = `Project ${this.name} is added/updated successfully`
+    async submitProject () {
+      const project = {name: this.name, description: this.description, date: this.date, employees: this.employees}
+      if (!this.editableProject) {
+        this.$store.dispatch('pushProject', {project})
+      } else {
+        this.$store.dispatch('editProject', {id: this.editableProject.id, project})
       }
+      this.$emit('input', false)
     }
   }
-}
-
-function validateAlphanumeric (text) {
-  return new RegExp('^[a-z0-9 ]+$', 'i').test(text)
-}
-
-function validateDate (dateString) {
-  var regEx = /^\d{4}-\d{2}-\d{2}$/
-  if (!dateString.match(regEx)) return false
-  var d = new Date(dateString)
-  var dNum = d.getTime()
-  if (!dNum && dNum !== 0) return false
-  return d.toISOString().slice(0, 10) === dateString
 }
 </script>
 

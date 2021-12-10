@@ -1,36 +1,29 @@
 <template>
-    <div id='project-management_header'>
-        <employee id= 'project-management_employee' class='project-management_element' />
-        <project id= 'project-management_project' class='project-management_element' />
+    <div id="project-management_header">
+      <EmployeeSection class="project-management_element" />
+      <ProjectSection class="project-management_element" />
+      <SnackbarMessage />
     </div>
 </template>
 
 <script>
-import Employee from './employee/Employee.vue'
-import Project from './project/Project.vue'
+import EmployeeSection from './employee/EmployeeSection.vue'
+import SnackbarMessage from './misc/SnackbarMessage.vue'
+import ProjectSection from './project/ProjectSection.vue'
 export default {
-  components: { Employee, Project },
-  data () {
-    return {
-
-    }
-  }
+  components: { EmployeeSection, ProjectSection, SnackbarMessage }
 }
 </script>
 
 <style scoped>
 
 #project-management_header {
-    display: flex;
-}
-
-#project-management_project {
-    flex-grow: 3;
+    display: grid;
+    grid-template-columns: 40% 60%;
 }
 
 .project-management_element {
     margin: 10px;
-    flex-grow: 2;
 }
 
 </style>

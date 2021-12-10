@@ -6,21 +6,18 @@
         <div>{{employee.id}}</div>
       </div>
     </md-list-item>
+    <md-divider class="md-inset"></md-divider>
   </div>
 </template>
 
 <script>
 export default {
   name: 'EmployeeItem',
-  props: ['employee'],
-  data () {
-    return {
-
+  props: {
+    employee: {
+      type: Object,
+      required: true
     }
   }
 }
 </script>
-
-<style>
-
-</style>

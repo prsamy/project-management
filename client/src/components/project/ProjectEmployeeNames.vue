@@ -3,21 +3,21 @@
 </template>
 
 <script>
-import { employeeService } from '../../service/employee'
 export default {
   name: 'ProjectEmployeeNames',
-  props: ['id'],
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       employee: ''
     }
   },
-  async created () {
-    const result = await employeeService.get(this.id)
-    console.log('Employee: ', result.data)
-    if (result.status === 200 && result.data) {
-      this.employee = result.data.name
-    }
+  created () {
+    this.employee = this.$store.getters.getEmployeeName(this.id)
   }
 
 }

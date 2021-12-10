@@ -3,7 +3,7 @@
     <md-toolbar class="md-primary">
       <h3 class="md-title">Project Management</h3>
     </md-toolbar>
-    <project-management />
+    <ProjectManagement />
   </div>
 </template>
 
@@ -15,7 +15,3 @@ export default {
   name: 'App'
 }
 </script>
-
-<style >
-
-</style>

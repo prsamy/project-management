@@ -1,10 +1,21 @@
 <template>
-  <div id="project_employees" class="md-layout md-gutter">
+  <div
+    id="project_employees"
+    class="md-layout md-gutter">
     <div class="md-layout-item">
       <md-field>
         <label for="employees">Employees</label>
-        <md-select v-model="assignedEmployees" name="employees" id="employees" multiple>
-          <md-option v-for="employee in employees" :key="employee.id" :value="employee.id">{{employee.name}}</md-option>
+        <md-select
+          multiple
+          v-model="assignedEmployees"
+          name="employees"
+          id="employees">
+          <md-option
+            v-for="employee in $store.state.employee.employees"
+            :key="employee.id"
+            :value="employee.id">
+            {{employee.name}}
+          </md-option>
         </md-select>
       </md-field>
     </div>
@@ -12,14 +23,12 @@
 </template>
 
 <script>
-import { employeeService } from '../../service/employee'
 export default {
-  name: 'AssignProjectEmployee',
+  name: 'ProjectAssignEmployee',
   props: ['value'],
   emits: ['input'],
   data () {
     return {
-      employees: [],
       assignedEmployees: []
     }
   },
@@ -28,12 +37,8 @@ export default {
       this.$emit('input', this.assignedEmployees)
     }
   },
-  async created () {
+  created () {
     this.assignedEmployees = this.value
-    const result = await employeeService.getAll()
-    if (result.status === 200) {
-      this.employees = [...this.employees, ...result.data.employees]
-    }
   }
 }
 </script>
